@@ -21,10 +21,6 @@
       "js": ["NetflixProfanityFilter.js"]
     },
 	{
-      "matches": ["*://*.disneyplus.com/*"],
-      "js": ["DisneyProfanityFilter.js"]
-    },
-	{
       "matches": ["*://*.hulu.com/*"],
       "js": ["HuluProfanityFilter.js"]
     },
