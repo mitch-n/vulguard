@@ -24,7 +24,6 @@ var time_without_subs=0;
 
 var blacklist=																										[/politic/,/(my|oh|to) god/,/god.? no/,/damn/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/]
 
-console.log(blacklist)
 var styleSheet = document.createElement("style")
 styleSheet.type = "text/css"
 styleSheet.innerText = "."+subtitle_class+"{margin-left:2000%};"
