@@ -2,9 +2,9 @@
 
   "manifest_version": 2,
   "name": "Vulguard Profanity Filter",
-  "version": "1.0",
+  "version": "2.0",
 
-  "description": "Filters Youtube Videos",
+  "description": "Filters Internet Videos",
   
   "icons": {
     "48": "icons/vulguard-icon.svg",
@@ -12,21 +12,9 @@
   },
   
   "content_scripts": [
-    {
-      "matches": ["*://*.youtube.com/*"],
-      "js": ["YoutubeProfanityFilter-v3.js"]
-    },
 	{
-      "matches": ["*://*.netflix.com/*"],
-      "js": ["NetflixProfanityFilter.js"]
-    },
-	{
-      "matches": ["*://*.hulu.com/*"],
-      "js": ["HuluProfanityFilter.js"]
-    },
-	{
-      "matches": ["*://*.amazon.com/*"],
-      "js": ["AmazonProfanityFilter.js"]
+      "matches": ["*://*.netflix.com/*", "*://*.hulu.com/*", "*://*.amazon.com/*", "*://*.youtube.com/*"],
+      "js": ["vulguard.js"]
     }
   ]
 
