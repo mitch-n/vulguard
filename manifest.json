@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Vulguard Profanity Filter",
-  "version": "2.0",
+  "version": "2.3",
 
   "description": "Filters Internet Videos",
   
@@ -13,7 +13,7 @@
   
   "content_scripts": [
 	{
-      "matches": ["*://*.netflix.com/*", "*://*.hulu.com/*", "*://*.amazon.com/*", "*://*.youtube.com/*"],
+      "matches": ["*://*.netflix.com/*", "*://*.hulu.com/*", "*://*.amazon.com/*", "*://*.youtube.com/*", "*://*.peacocktv.com/*"],
       "js": ["vulguard.js"]
     }
   ]

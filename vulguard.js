@@ -1,7 +1,9 @@
 //Turn on subtitles to filter
 
 console.log("Starting Vulguard")
-var video=document.querySelectorAll("video, audio")[0];
+
+var videos=document.querySelectorAll("video, audio");
+var style_id = "hidden_subtitle_style"
 var subtitle_class="";
 
 url_parts=location.hostname.split(".")
@@ -19,15 +21,14 @@ else if (domain == "amazon"){
 else if (domain == "youtube"){
 	subtitle_class="ytp-caption-window-container"
 }
+else if (domain == "peacocktv"){
+	subtitle_class="video-player__subtitles"
+}
 
 var time_without_subs=0;
 
-var blacklist=																										[/politic/,/(my|oh|to) god/,/god.? no/,/damn/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/]
+var blacklist=																										[/frak/,/god/,/damn/,/bitch/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat|es)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/]
 
-var styleSheet = document.createElement("style")
-styleSheet.type = "text/css"
-styleSheet.innerText = "."+subtitle_class+"{margin-left:2000%};"
-document.head.appendChild(styleSheet)
 
 var checker_interval = setInterval(check4subs,2000);
 var filter_interval='';
@@ -36,6 +37,16 @@ function check4subs() {
 	console.log("searching for subtitles");
 	if (document.getElementsByClassName(subtitle_class)[0].innerText.length>0){
 		console.log("found subtitles");
+		
+		if (!document.getElementById(style_id)){
+			console.log("hiding subtitles")
+			var styleSheet = document.createElement("style")
+			styleSheet.type = "text/css"
+			styleSheet.id = style_id
+			styleSheet.innerText = "."+subtitle_class+"{margin-left:2000%};"
+			document.head.appendChild(styleSheet)
+		}
+		
 		clearInterval(checker_interval);
 		filter_interval=setInterval(filter,10);
 	}
@@ -52,7 +63,7 @@ function filter(){
 	}
 	catch(e){
 		time_without_subs+=1;
-		console.log(time_without_subs);
+		//console.log(time_without_subs);
 		if (time_without_subs>3000){
 			time_without_subs=0;
 			clearInterval(filter_interval);
@@ -78,17 +89,22 @@ function filter(){
 	}
 
 	//console.log(do_mute);
-
+	
+	var videos=document.querySelectorAll("video, audio");
 	if (do_mute){
-		if (video.muted==false){
-			video.muted=true;
-			//console.log("mute");
+		for (i=0;i<videos.length;i++){
+			if (videos[i].muted==false){
+				videos[i].muted=true;
+				//console.log("mute");
+			}
 		}
 	}
 	else{
-		if (video.muted==true){
-			video.muted=false;
-			//console.log("un-mute");
+		for (i=0;i<videos.length;i++){
+			if (videos[i].muted==true){
+				videos[i].muted=false;
+				//console.log("unmute");
+			}
 		}
 	}
 }
