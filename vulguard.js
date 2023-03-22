@@ -27,7 +27,7 @@ else if (domain == "peacocktv"){
 
 var time_without_subs=0;
 
-var blacklist=																										[/frak/,/god/,/damn/,/bitch/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat|es)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/]
+var blacklist=																										[/frak/,/god/,/damn/,/bitch/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat|es)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/,/\[ __ \]/,/fuck/]
 
 
 var checker_interval = setInterval(check4subs,2000);
