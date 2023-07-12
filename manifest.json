@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Vulguard Profanity Filter",
-  "version": "2.4",
+  "version": "3.0",
 
   "description": "Filters Internet Videos",
   
@@ -11,11 +11,37 @@
 	"96": "icons/vulguard-icon.svg"
   },
   
+  "browser_action": {
+    "default_popup": "options.html",
+	"default_icon": {
+	  "16": "icons/vulguard-icon.svg",
+	  "32": "icons/vulguard-icon.svg"
+	}
+  },
+  
   "content_scripts": [
 	{
       "matches": ["*://*.netflix.com/*", "*://*.hulu.com/*", "*://*.amazon.com/*", "*://*.youtube.com/*", "*://*.peacocktv.com/*"],
       "js": ["vulguard.js"]
     }
-  ]
+  ],
+  
+  "background": {
+	"scripts": ["background.js"]
+  },
+  
+  "options_ui": {
+	"page": "options.html"
+  },
+  
+  "permissions": [
+	"storage"
+  ],
+  
+  "browser_specific_settings": {
+	"gecko": {
+	  "id": "{3b3d2ba5-34fd-4e0b-98f1-56bf42e0693b}"
+	}
+  }
 
 }

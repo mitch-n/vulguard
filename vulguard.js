@@ -26,8 +26,25 @@ else if (domain == "peacocktv"){
 }
 
 var time_without_subs=0;
+var blacklist = [/frak/,/god/,/damn/,/bitch/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat|es)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/,/\[ __ \]/,/fuck/];
 
-var blacklist=																										[/frak/,/god/,/damn/,/bitch/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat|es)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/,/\[ __ \]/,/fuck/]
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
+function onGot(item) {
+	if (item.blacklist){
+		blacklist_words = item.blacklist.split("\n");
+		blacklist = []
+		for (word of blacklist_words){
+			if(word){
+				blacklist.push(RegExp(word.toLowerCase()))
+			}
+		}
+		//console.log(blacklist)
+	}
+}
+const getting = browser.storage.sync.get("blacklist");
+getting.then(onGot, onError);
 
 
 var checker_interval = setInterval(check4subs,2000);

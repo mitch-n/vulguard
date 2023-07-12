@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+	<style>
+	
+	body {
+		max-width: 400px;
+		font-family: Roboto, Arial, sans-serif;
+		margin: 25px;
+	}
+	h1,h2,h3,h4,h5,h6 {
+		color: #008066ff;
+	}
+	#blacklist{
+		width:100%;
+		border: 1px solid black;
+		filter: blur(4px);
+		transition: filter .8s;
+	}
+	#blacklist:focus {
+		filter: blur(0);
+	}
+	.button_wrapper {
+		width: 100%;
+		display: flex;
+		justify-content:center;
+	}
+	button {
+		border: 1px solid #008066ff;
+		background-color: white;
+		color: #008066ff;
+		padding:8px 50px;
+		margin: 10px 0;
+	}
+	button:hover {
+		background-color: #008066ff;
+		color: white;
+		cursor: pointer;
+	}
+	.icon {
+		margin-bottom: -3.5%;
+		margin-right: 12px;
+	}
+	</style>
+  </head>
+
+  <body style="max-width: 400px">
+  
+  
+  <h1><img src="icons/vulguard-icon.svg" class="icon">Vulguard Settings</h1>
+  <p>Modify the blacklist below. Type one word per line (can also do regex). Then press save.</p>
+  <p>You will need to refresh the page on your video for the new blacklist to apply.</p>
+    <form>
+		<h2>Blacklist</h2>
+		<h3>(click box below to edit)</h3>
+		<textarea id="blacklist" name="blacklist" rows="25" >
+god
+damn
+bitch
+shit
+bastard
+jesus
+lord
+christ
+\bass(\b|hole|hat|es)
+\bhell\b
+dick
+vagina
+penis
+sex
+whore
+slut
+cunt
+idiot
+moron
+\[ __ \]
+fuck
+what the
+oh my
+		</textarea><br>
+		<div class="button_wrapper">
+			<button type="submit">Save</button>
+		</div>
+    </form>
+
+    <script src="options.js"></script>
+  </body>
+</html>
