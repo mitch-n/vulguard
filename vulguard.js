@@ -24,6 +24,11 @@ else if (domain == "youtube"){
 else if (domain == "peacocktv"){
 	subtitle_class="video-player__subtitles"
 }
+else if (domain == "max"){
+	subtitle_class="CaptionWindow"
+}
+
+subtitle_container=""
 
 var time_without_subs=0;
 var blacklist = [/frak/,/god/,/damn/,/bitch/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat|es)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/,/\[ __ \]/,/fuck/];
@@ -52,7 +57,8 @@ var filter_interval='';
 
 function check4subs() {
 	console.log("searching for subtitles");
-	if (document.getElementsByClassName(subtitle_class)[0].innerText.length>0){
+	subtitle_container = document.querySelector('[class*='+subtitle_class+']')
+	if (subtitle_container.innerText.length>0){
 		console.log("found subtitles");
 		
 		if (!document.getElementById(style_id)){
@@ -60,7 +66,7 @@ function check4subs() {
 			var styleSheet = document.createElement("style")
 			styleSheet.type = "text/css"
 			styleSheet.id = style_id
-			styleSheet.innerText = "."+subtitle_class+"{margin-left:2000%};"
+			styleSheet.innerText = "."+subtitle_container.className.split(" ")[0]+"{margin-left:2000%};"
 			document.head.appendChild(styleSheet)
 		}
 		
@@ -70,9 +76,10 @@ function check4subs() {
 }
 
 
-function filter(){  
+function filter(){
+	subtitle_container = document.querySelector('[class*='+subtitle_class+']')	
 	try{
-		if (document.getElementsByClassName(subtitle_class)[0].innerText.length<1){
+		if (subtitle_container.innerText.length<1){
 			throw "no subtitles found";
 		}
 		//console.log("hiding subs");
@@ -91,7 +98,8 @@ function filter(){
 	//Get subtitle text
 	var subtitle_text="";
 	try{
-		subtitle_text=document.getElementsByClassName(subtitle_class)[0].innerText;
+		//subtitle_text=document.getElementsByClassName(subtitle_class)[0].innerText;
+		subtitle_text=subtitle_container.innerText;
 	}
 	catch(err){}
 	
