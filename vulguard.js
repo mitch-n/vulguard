@@ -27,11 +27,14 @@ else if (domain == "peacocktv"){
 else if (domain == "max"){
 	subtitle_class="CaptionWindow"
 }
+else if (domain == "plex"){
+	subtitle_class="Subtitles-measure-"
+}
 
 subtitle_container=""
 
 var time_without_subs=0;
-var blacklist = [/frak/,/god/,/damn/,/bitch/,/shit/,/bastard/,/jesus/,/lord/,/christ/,/\bass(\b|hole|hat|es)/,/\bhell\b/,/dick/,/vagina/,/penis/,/sex/,/whore/,/slut/,/cunt/,/idiot/,/moron/,/\[ __ \]/,/fuck/];
+var blacklist = ""
 
 function onError(error) {
   console.log(`Error: ${error}`);

@@ -1,8 +1,8 @@
 {
 
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Vulguard Profanity Filter",
-  "version": "3.2",
+  "version": "3.4",
 
   "description": "Filters Internet Videos",
   
@@ -21,7 +21,7 @@
   
   "content_scripts": [
 	{
-      "matches": ["*://*.netflix.com/*", "*://*.hulu.com/*", "*://*.amazon.com/*", "*://*.youtube.com/*", "*://*.peacocktv.com/*", "*://play.max.com/*"],
+      "matches": ["*://*.netflix.com/*", "*://*.hulu.com/*", "*://*.amazon.com/*", "*://*.youtube.com/*", "*://*.peacocktv.com/*", "*://play.max.com/*", "*://app.plex.tv/*"],
       "js": ["vulguard.js"]
     }
   ],
