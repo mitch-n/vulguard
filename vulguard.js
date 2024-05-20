@@ -30,6 +30,9 @@ else if (domain == "max"){
 else if (domain == "plex"){
 	subtitle_class="Subtitles-measure-"
 }
+else if (domain == "paramountplus"){
+	subtitle_class="timed-text-css-box-container-mask"
+}
 
 subtitle_container=""
 
