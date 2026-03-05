@@ -15,7 +15,7 @@ if (domain == "netflix"){
 else if (domain == "hulu"){
 	subtitle_class="ClosedCaption"
 }
-else if (domain == "amazon"){
+else if (domain == "amazon" || domain == "primevideo"){
 	subtitle_class="atvwebplayersdk-captions-text"
 }
 else if (domain == "youtube"){
@@ -33,6 +33,9 @@ else if (domain == "plex"){
 else if (domain == "paramountplus"){
 	subtitle_class="timed-text-css-box-container-mask"
 }
+else if (domain == "disneyplus"){
+	subtitle_class="TimedTextOverlay"
+}
 
 subtitle_container=""
 
@@ -44,7 +47,7 @@ function onError(error) {
 }
 function onGot(item) {
 	if (item.blacklist){
-		blacklist_words = item.blacklist.split("\n");
+		const blacklist_words = item.blacklist.split("\n");
 		blacklist = []
 		for (word of blacklist_words){
 			if(word){
@@ -57,25 +60,27 @@ function onGot(item) {
 const getting = browser.storage.sync.get("blacklist");
 getting.then(onGot, onError);
 
+console.log(blacklist)
 
 var checker_interval = setInterval(check4subs,2000);
 var filter_interval='';
 
 function check4subs() {
 	console.log("searching for subtitles");
-	subtitle_container = document.querySelector('[class*='+subtitle_class+']')
-	if (subtitle_container.innerText.length>0){
-		console.log("found subtitles");
-		
-		if (!document.getElementById(style_id)){
-			console.log("hiding subtitles")
-			var styleSheet = document.createElement("style")
-			styleSheet.type = "text/css"
-			styleSheet.id = style_id
-			styleSheet.innerText = "."+subtitle_container.className.split(" ")[0]+"{margin-left:2000%};"
-			document.head.appendChild(styleSheet)
+	let subtitles_found = false;
+	let subtitle_containers = document.getElementsByClassName(subtitle_class)
+	
+	for (let subtitle_container of subtitle_containers){
+		if (subtitle_container.innerText.length>0){
+			console.log("found subtitles");
+			subtitles_found = true;
 		}
-		
+	}
+	console.log("Subtitles Found: "+subtitles_found)
+	if (subtitles_found){
+		const s = document.createElement('style');
+		s.textContent = `.${subtitle_class}{display:none}`
+		document.head.appendChild(s)
 		clearInterval(checker_interval);
 		filter_interval=setInterval(filter,10);
 	}
@@ -83,58 +88,60 @@ function check4subs() {
 
 
 function filter(){
-	subtitle_container = document.querySelector('[class*='+subtitle_class+']')	
-	try{
-		if (subtitle_container.innerText.length<1){
-			throw "no subtitles found";
-		}
-		//console.log("hiding subs");
-		time_without_subs=0;
-	}
-	catch(e){
-		time_without_subs+=1;
-		//console.log(time_without_subs);
-		if (time_without_subs>3000){
+	const subtitle_containers = document.getElementsByClassName(subtitle_class)
+	for (let subtitle_container of subtitle_containers){
+		try{
+			if (subtitle_container.innerText.length<1){
+				throw "no subtitles found";
+			}
+			//console.log("hiding subs");
 			time_without_subs=0;
-			clearInterval(filter_interval);
-			checker_interval=setInterval(check4subs,2000);
 		}
-	}
-	
-	//Get subtitle text
-	var subtitle_text="";
-	try{
-		//subtitle_text=document.getElementsByClassName(subtitle_class)[0].innerText;
-		subtitle_text=subtitle_container.innerText;
-	}
-	catch(err){}
-	
-	//Check if a blacklist word is present in subtitle text, and if so, set do_mute to true
-	var do_mute=false;
-	for (var i=0 ; i<blacklist.length ; i++){		
-		if (subtitle_text.toLowerCase().match(blacklist[i])){
-			console.log("blacklist word: "+blacklist[i]);
-			do_mute=true;
-			break;
-		}
-	}
-
-	//console.log(do_mute);
-	
-	var videos=document.querySelectorAll("video, audio");
-	if (do_mute){
-		for (i=0;i<videos.length;i++){
-			if (videos[i].muted==false){
-				videos[i].muted=true;
-				//console.log("mute");
+		catch(e){
+			time_without_subs+=1;
+			//console.log(time_without_subs);
+			if (time_without_subs>3000){
+				time_without_subs=0;
+				clearInterval(filter_interval);
+				checker_interval=setInterval(check4subs,2000);
 			}
 		}
-	}
-	else{
-		for (i=0;i<videos.length;i++){
-			if (videos[i].muted==true){
-				videos[i].muted=false;
-				//console.log("unmute");
+		
+		//Get subtitle text
+		var subtitle_text="";
+		try{
+			//subtitle_text=document.getElementsByClassName(subtitle_class)[0].innerText;
+			subtitle_text=subtitle_container.innerText;
+		}
+		catch(err){}
+		
+		//Check if a blacklist word is present in subtitle text, and if so, set do_mute to true
+		var do_mute=false;
+		for (var i=0 ; i<blacklist.length ; i++){		
+			if (subtitle_text.toLowerCase().match(blacklist[i])){
+				console.log("blacklist word: "+blacklist[i]);
+				do_mute=true;
+				break;
+			}
+		}
+	
+		//console.log(do_mute);
+		
+		var videos=document.querySelectorAll("video, audio");
+		if (do_mute){
+			for (i=0;i<videos.length;i++){
+				if (videos[i].muted==false){
+					videos[i].muted=true;
+					//console.log("mute");
+				}
+			}
+		}
+		else{
+			for (i=0;i<videos.length;i++){
+				if (videos[i].muted==true){
+					videos[i].muted=false;
+					//console.log("unmute");
+				}
 			}
 		}
 	}
